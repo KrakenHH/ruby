@@ -24,21 +24,20 @@ class Board
 
   end
 
-
-
-
-  def p1_turn(reduc = false)
+  def p1_turn(reduc = false, invalid = false)
     show_board
     puts "***TIME FOR A RETRY #{@p1.name} BECAUSE YOU SELECTED A FILLED SPOT***" if reduc
+    puts "***ENTER A VALID LOCATION" if invalid
     puts "#{@p1.name}, where would you like to place your X, select using A1 through A3, B1 through B3 and C3 through C3"
     placement = gets.chomp.upcase
     alter_board(placement, 'X', @p1) 
   
   end
 
-  def p2_turn(reduc = false)
+  def p2_turn(reduc = false, invalid = false)
     show_board
     puts "***TIME FOR A RETRY #{@p2.name} BECAUSE YOU SELECTED A FILLED SPOT***" if reduc
+    puts "***ENTER A VALID LOCATION" if invalid
     puts "#{@p2.name}, where would you like to place your O, select using A1 through A3, B1 through B3 and C3 through C3"
     placement = gets.chomp.upcase
     alter_board(placement, 'O', @p2)
@@ -63,12 +62,14 @@ class Board
       else
         player == @p1 ? p1_turn(true) : p2_turn(true)
       end
-    else 
+    elsif coords.first == 'C' 
       unless full?(@bot_line[coords[1].to_i])
         @bot_line[coords[1].to_i] = " #{x_o} " unless full?(@bot_line[coords[1].to_i])
       else
         player == @p1 ? p1_turn(true) : p2_turn(true)
       end
+    else
+      player == @p1 ? p1_turn(false, true) : p2_turn(false, true)
     end
   end
 
@@ -104,18 +105,13 @@ class Board
   end
 
   def victory?(player)
-    if player == @p1
-      token2 = ' O '
-    else
-      token2 = ' X '
-    end
+    player == @p1 ? token2 = ' O ' : token2 = ' X '
 
     return true if row_checker(token2)
 
     return true if column_creator_checker(token2)
 
     return true if diag_creator_checker(token2)
-
 
   end
 
@@ -153,12 +149,7 @@ class Board
     elsif @diag2.include?('   ') == false && @diag2.include?(token2) == false
       return true
     end
-
   end
-      
-      
-
-
 end
 
 b = Board.new
