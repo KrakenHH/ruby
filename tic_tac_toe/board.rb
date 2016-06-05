@@ -105,13 +105,21 @@ class Board
 
   def victory?(player)
     if player == @p1
-      token1 = ' X '
       token2 = ' O '
     else
-      token1 = ' O '
       token2 = ' X '
     end
 
+    return true if row_checker(token2)
+
+    return true if column_creator_checker(token2)
+
+    return true if diag_creator_checker(token2)
+
+
+  end
+
+  def row_checker(token2)
     if @top_line.include?('   ') == false && @top_line.include?(token2) == false
       return true
     elsif @mid_line.include?('   ') == false && @mid_line.include?(token2) == false
@@ -119,8 +127,12 @@ class Board
     elsif @bot_line.include?('   ') == false && @bot_line.include?(token2) == false
       return true
     end
+  end
 
-    column_creator
+  def column_creator_checker(token2)
+    @column1 = [@top_line[0],@mid_line[0],@bot_line[0]]
+    @column2 = [@top_line[2],@mid_line[2],@bot_line[2]]
+    @column3 = [@top_line[4],@mid_line[4],@bot_line[4]]
 
     if @column1.include?('   ') == false && @column1.include?(token2) == false
       return true
@@ -130,24 +142,18 @@ class Board
       return true
     end
 
-    diag_creator
+  end
+
+  def diag_creator_checker(token2)
+    @diag1 = [@top_line[0],@mid_line[2],@bot_line[4]]
+    @diag2 = [@top_line[4],@mid_line[2],@bot_line[0]]
 
     if @diag1.include?('   ') == false && @diag1.include?(token2) == false
       return true
     elsif @diag2.include?('   ') == false && @diag2.include?(token2) == false
       return true
     end
-  end
 
-  def column_creator
-    @column1 = [@top_line[0],@mid_line[0],@bot_line[0]]
-    @column2 = [@top_line[2],@mid_line[2],@bot_line[2]]
-    @column3 = [@top_line[4],@mid_line[4],@bot_line[4]]
-  end
-
-  def diag_creator
-    @diag1 = [@top_line[0],@mid_line[2],@bot_line[4]]
-    @diag2 = [@top_line[4],@mid_line[2],@bot_line[0]]
   end
       
       
