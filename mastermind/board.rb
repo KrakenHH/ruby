@@ -7,29 +7,32 @@ class Board
     @turn_counter = 9
     feedback_pegs_create
     create_answer
-    @answer_pegs.each { |x| puts x.color }
     create_empty_board
+    show_board
     while @turn_counter >= 0
       turn
       if victory?
         puts "YOU CRACKED THE CODE, YOU WIN!!!"
         break
       end
-      puts "GAME OVER YOU LOSE" if @turn_counter == -1
+      puts "GAME OVER YOU LOSE, the answer was #{@answer_pegs[0].color} #{@answer_pegs[1].color} #{@answer_pegs[2].color} #{@answer_pegs[3].color}" if @turn_counter == -1
     end
   end
 
   def turn
     puts "Which 4 pegs would you like to place? Use the first letters of the colors ((r)ed, (y)ellow, (g)reen, (b)lue, (o)range, or (p)urple) you would like to place seperated by spaces."
     choices = gets.chomp.split
-    if choices.size > 4
-      puts "\n\n\n***Error, you entered too many choices, try again with less choices.***".upcase
+    if choices.size != 4
+      show_board
+      puts "***Error, you entered the incorrect ammount of choices, try again with the correct number of choices, which is 4.***".upcase
       turn
     elsif (choices.select { |x| x =~ /[^rygbop]/i }).empty? == false
-      puts "\n\n\n***You have made an incorrect slections, please try again, and choose the correct letters.***".upcase
+      show_board
+      puts "***You have made an incorrect slections, please try again, and choose the correct letters.***".upcase
       turn
     elsif choices.any? { |x| x.length > 1}
-      puts "\n\n\n***You must seperate your letter by spaces. Please try again.***".upcase
+      show_board
+      puts "***You must seperate your letter by spaces. Please try again.***".upcase
       turn
     else  
     choice_creator_inserter(choices)
@@ -54,9 +57,6 @@ class Board
 
   def show_board
     count = 0
-    #print "\""
-    #@answer_pegs.each { |x| print "|" + x.color}
-    #puts "|\n"
     @rows.each do |row|
 
       if row.join.include? ' '
@@ -123,7 +123,6 @@ class Board
     end
 
     return "#{blacks} black(s), #{whites} white(s)"
-
   end
 
   def create_answer
@@ -144,10 +143,7 @@ class Board
     else
       return false
     end
-
   end
-
-
 end
 
 b = Board.new
