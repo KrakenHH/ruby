@@ -28,7 +28,7 @@ class Board
     show_board
     puts "***TIME FOR A RETRY #{@p1.name} BECAUSE YOU SELECTED A FILLED SPOT***" if reduc
     puts "***ENTER A VALID LOCATION" if invalid
-    puts "#{@p1.name}, where would you like to place your X, select using A1 through A3, B1 through B3 and C3 through C3"
+    puts "#{@p1.name}, where would you like to place your X, select using A1 through A3, B1 through B3 and C1 through C3"
     placement = gets.chomp.upcase
     alter_board(placement, 'X', @p1) 
   
