@@ -9,6 +9,7 @@ class Board
     create_answer
     create_empty_board
     show_board
+    puts "BEGGINING OF GAME NOTE! A black peg response means you replaced a correct color in a correct space. A white peg response means you placed an incorrect color in an incorrect space."
     while @turn_counter >= 0
       turn
       if victory?
