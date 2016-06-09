@@ -12,6 +12,8 @@ def legislators_by_zipcode(zipcode)
   Sunlight::Congress::Legislator.by_zipcode(zipcode)
 end
 
+def clean_phone_numbers
+
 def save_thank_you_letters(id,form_letter)
   Dir.mkdir("output") unless Dir.exists?("output")
 
@@ -33,6 +35,9 @@ contents.each do |row|
   id = row[0]
   name = row[:first_name]
   zipcode = clean_zipcode(row[:zipcode])
+
+  phone_number = clean_phone_number(row[:homephone])
+
   legislators = legislators_by_zipcode(zipcode)
 
   form_letter = erb_template.result(binding)
