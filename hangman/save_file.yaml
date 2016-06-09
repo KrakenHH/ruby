@@ -1,0 +1,24 @@
+--- !ruby/object:Hangman
+file_name: trial!
+secret_word: menswear
+secret_word_letters:
+- m
+- e
+- n
+- s
+- w
+- e
+- a
+- r
+answer_array:
+- _
+- _
+- _
+- s
+- _
+- _
+- a
+- _
+turn_counter: 9
+guessed_letters_and_words: 'a b l i z u b s '
+end_game: false
