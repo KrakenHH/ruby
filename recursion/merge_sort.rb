@@ -37,3 +37,7 @@ end
 
 
 puts merge_sort([1,2,34,3,12,2,4,5,6])
+
+
+#Notes to self about recursion: always start with the base case and build up from there. It will work out. 
+#When working through a case, imagine breaking down the case to it's little pieces and base case, then building it back up.
