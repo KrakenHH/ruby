@@ -1,6 +1,6 @@
 class Node
 
-  attr_accessor :left_child, :right_child, :parent, :value
+  attr_accessor :left_child, :right_child, :value
 
 
   def initialize(value)
@@ -40,11 +40,90 @@ class Node
     nodes
   end
 
+  def breadth_first_search(search_value)
+    queue = []
+    node = @master_node
+    return node if node.value == search_value
+   
+    queue << @master_node
+
+      until queue.empty?
+
+        queue_node = queue.shift
+
+        unless queue_node.left_child.nil?
+          current_node = queue_node.left_child 
+          return current_node if current_node.value == search_value 
+          queue << current_node
+        end
+        unless queue_node.right_child.nil?
+          current_node = queue_node.right_child
+          return current_node if current_node.value == search_value
+          queue << current_node
+        end
+      end
+  
+  end
+
+  def depth_first_search(search_value)
+
+    stack = []
+    node = @master_node
+    stack << node
+    current_node = @master_node
+    current_node if node.value = search_value
+
+    while 1
+
+      until current_node.left_child.nil?
+        current_node = current_node.left_child
+        return current_node if current_node.value = search_value
+        stack << current_node
+      end
+
+      loop do
+        current_node = stack.pop
+        if current_node.right_child.nil? == false
+          current_node = current_node.right_child 
+          return current_node if current_node.value == search_value
+          stack << current_node
+          break
+        end
+
+      end 
+
+    end
+
+  end
+
+  def dfs_rec(search_value, compare_node = @master_node) #not my original code
+
+    return compare_node if compare_node.value == search_value
+    a = dfs_rec(search_value, compare_node.left_child) if compare_node.left_child
+    return a if a
+    b = dfs_rec(value, compare_node.right) if compare_node.right
+    return b if breadth_first_search
+    nil
+
+  end
+
+
 end
+
+
 
 
 my_nodes = Node.new(0)
 
-nodes = my_nodes.build_tree([3,8,6,7,4,0,2])
+nodes = my_nodes.build_tree([7,3,1,0,2,6,4,5,12,9,8,11,10,13,15,14])
+
+puts nodes[4]
+puts my_nodes.dfs_rec(2)
+
+
+
+
+
+
 
 
