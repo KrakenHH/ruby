@@ -87,7 +87,7 @@ module Enumerable
 
 end
 
-  def multiply_els(arr)
-    return arr.my_inject {|total,num| num*total}
-  end
+def multiply_els(arr)
+  return arr.my_inject {|total,num| num*total}
+end
 
