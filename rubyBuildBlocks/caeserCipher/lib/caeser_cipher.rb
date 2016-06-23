@@ -1,4 +1,4 @@
-def ceasarCipher(str, num)
+def caeser_cipher(str, num)
 	chars = str.split('')
 
 	cipheredMessage = []
@@ -33,13 +33,13 @@ def ceasarCipher(str, num)
 	return cipheredMessage.join
 end
 
-puts "enter a message to the great ceasarCipher"
+puts "enter a message to the great caeser_cipher"
 message = gets.chomp
 
 puts "enther the ammount of digits you would like to shift"
 shift_num = gets.chomp.to_i
 
-puts ceasarCipher(message,shift_num)
+puts caeser_cipher(message,shift_num)
 
 
 
