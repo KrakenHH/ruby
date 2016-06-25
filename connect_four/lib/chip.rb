@@ -10,5 +10,4 @@ class Chip
     return "\u26AA" if color == "red"
   end
 
-
 end

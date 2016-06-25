@@ -7,6 +7,4 @@ class Player
     @color = color
   end
 
-
-
 end

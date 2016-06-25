@@ -49,7 +49,6 @@ class Game
     end
   end
 
-
 end
 
 g = Game.new
