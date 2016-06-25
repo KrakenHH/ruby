@@ -13,6 +13,7 @@ describe Player do
     it "gives a player a color" do
       expect(bob.color).to eql("red")
     end
+
   end
 
 

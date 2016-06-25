@@ -1,4 +1,5 @@
 require_relative '../lib/board.rb'
+require_relative '../lib/chip.rb'
 
 
 describe Board do
@@ -44,40 +45,62 @@ describe Board do
     end
   end
 
+  describe "#drop_chip(column_number, color)" do
+    it "drops the appropriate chip down the appropriate collumn" do
+      board.drop_chip(1, "red")
+      board.drop_chip(1, "black")
+      board.drop_chip(1, "red")
+      board.drop_chip(3, "red")
+      board.drop_chip(4, "black")
+      board.drop_chip(2, "red")
+      board.drop_chip(2, "red")
+      board.drop_chip(2, "black")
+      expect(board.get_grid_coordinate(0,0).color).to eql("red")
+      expect(board.get_grid_coordinate(0,1).color).to eql("black")
+      expect(board.get_grid_coordinate(0,2).color).to eql("red")
+      expect(board.get_grid_coordinate(2,0).color).to eql("red")
+      expect(board.get_grid_coordinate(3,0).color).to eql("black")
+      expect(board.get_grid_coordinate(1,0).color).to eql("red")
+      expect(board.get_grid_coordinate(1,1).color).to eql("red")
+      expect(board.get_grid_coordinate(1,2).color).to eql("black")
+      board.display_board
+    end
+  end
+
   describe "#diag_victory?" do
     it "returns true if there is a diagonal victory" do
-      board.set_grid_coordinate(3,3,"X")
-      board.set_grid_coordinate(4,2,"X")
-      board.set_grid_coordinate(5,1,"X")
-      board.set_grid_coordinate(6,0,"X")
+      board.set_grid_coordinate(3,3,Chip.new("red"))
+      board.set_grid_coordinate(4,2,Chip.new("red"))
+      board.set_grid_coordinate(5,1,Chip.new("red"))
+      board.set_grid_coordinate(6,0,Chip.new("red"))
       expect(board.diag_victory?).to be(true)
     end
     it "returns true if there is a diagonal victory" do
-      board.set_grid_coordinate(0,3,"X")
-      board.set_grid_coordinate(1,2,"X")
-      board.set_grid_coordinate(2,1,"X")
-      board.set_grid_coordinate(3,0,"X")
+      board.set_grid_coordinate(0,3,Chip.new("red"))
+      board.set_grid_coordinate(1,2,Chip.new("red"))
+      board.set_grid_coordinate(2,1,Chip.new("red"))
+      board.set_grid_coordinate(3,0,Chip.new("red"))
       expect(board.diag_victory?).to be(true)
     end
     it "returns true if there is a diagonal victory" do
-      board.set_grid_coordinate(1,4,"X")
-      board.set_grid_coordinate(2,3,"X")
-      board.set_grid_coordinate(3,2,"X")
-      board.set_grid_coordinate(4,1,"X")
+      board.set_grid_coordinate(1,4,Chip.new("black"))
+      board.set_grid_coordinate(2,3,Chip.new("black"))
+      board.set_grid_coordinate(3,2,Chip.new("black"))
+      board.set_grid_coordinate(4,1,Chip.new("black"))
       expect(board.diag_victory?).to be(true)
     end
    it "returns true if there is a diagonal victory" do
-      board.set_grid_coordinate(5,4,"X")
-      board.set_grid_coordinate(4,3,"X")
-      board.set_grid_coordinate(3,2,"X")
-      board.set_grid_coordinate(2,1,"X")
+      board.set_grid_coordinate(5,4,Chip.new("black"))
+      board.set_grid_coordinate(4,3,Chip.new("black"))
+      board.set_grid_coordinate(3,2,Chip.new("black"))
+      board.set_grid_coordinate(2,1,Chip.new("black"))
       expect(board.diag_victory?).to be(true)
     end
     it "returns false if there is no diagonal victory" do
-      board.set_grid_coordinate(0,0,"X")
-      board.set_grid_coordinate(1,0,"X")
-      board.set_grid_coordinate(2,0,"X")
-      board.set_grid_coordinate(3,0,"X")
+      board.set_grid_coordinate(0,0,Chip.new("black"))
+      board.set_grid_coordinate(1,0,Chip.new("black"))
+      board.set_grid_coordinate(2,0,Chip.new("black"))
+      board.set_grid_coordinate(3,0,Chip.new("black"))
       expect(board.diag_victory?).to be(false)
     end
 
@@ -85,76 +108,76 @@ describe Board do
 
   describe "#horizontal_victory?" do
     it "returns true if there is a horizontal victory" do
-      board.set_grid_coordinate(0,0,"X")
-      board.set_grid_coordinate(1,0,"X")
-      board.set_grid_coordinate(2,0,"X")
-      board.set_grid_coordinate(3,0,"X")
+      board.set_grid_coordinate(0,0,Chip.new("red"))
+      board.set_grid_coordinate(1,0,Chip.new("red"))
+      board.set_grid_coordinate(2,0,Chip.new("red"))
+      board.set_grid_coordinate(3,0,Chip.new("red"))
       expect(board.horizontal_victory?).to be(true)
     end
     it "returns true if there is a horizontal victory" do
-      board.set_grid_coordinate(2,2,"X")
-      board.set_grid_coordinate(3,2,"X")
-      board.set_grid_coordinate(4,2,"X")
-      board.set_grid_coordinate(5,2,"X")
+      board.set_grid_coordinate(2,2,Chip.new("red"))
+      board.set_grid_coordinate(3,2,Chip.new("red"))
+      board.set_grid_coordinate(4,2,Chip.new("red"))
+      board.set_grid_coordinate(5,2,Chip.new("red"))
       expect(board.horizontal_victory?).to be(true)
     end
     it "returns true if there is a horizontal victory" do
-      board.set_grid_coordinate(3,4,"X")
-      board.set_grid_coordinate(4,4,"X")
-      board.set_grid_coordinate(5,4,"X")
-      board.set_grid_coordinate(6,4,"X")
+      board.set_grid_coordinate(3,4,Chip.new("red"))
+      board.set_grid_coordinate(4,4,Chip.new("red"))
+      board.set_grid_coordinate(5,4,Chip.new("red"))
+      board.set_grid_coordinate(6,4,Chip.new("red"))
       expect(board.horizontal_victory?).to be(true)
     end
    it "returns true if there is a horizontal victory" do
-      board.set_grid_coordinate(1,5,"X")
-      board.set_grid_coordinate(2,5,"X")
-      board.set_grid_coordinate(3,5,"X")
-      board.set_grid_coordinate(4,5,"X")
+      board.set_grid_coordinate(1,5,Chip.new("red"))
+      board.set_grid_coordinate(2,5,Chip.new("red"))
+      board.set_grid_coordinate(3,5,Chip.new("red"))
+      board.set_grid_coordinate(4,5,Chip.new("red"))
       expect(board.horizontal_victory?).to be(true)
     end
     it "returns false if there is no horizontal victory" do
-      board.set_grid_coordinate(3,3,"X")
-      board.set_grid_coordinate(4,0,"X")
-      board.set_grid_coordinate(6,6,"X")
-      board.set_grid_coordinate(3,0,"X")
+      board.set_grid_coordinate(3,3,Chip.new("red"))
+      board.set_grid_coordinate(4,0,Chip.new("red"))
+      board.set_grid_coordinate(6,6,Chip.new("red"))
+      board.set_grid_coordinate(3,0,Chip.new("red"))
       expect(board.horizontal_victory?).to be(false)
     end
 
 
   describe "#vertical_victory?" do
     it "returns true if there is a vertical victory" do
-      board.set_grid_coordinate(0,0,"X")
-      board.set_grid_coordinate(0,1,"X")
-      board.set_grid_coordinate(0,2,"X")
-      board.set_grid_coordinate(0,3,"X")
+      board.set_grid_coordinate(0,0,Chip.new("black"))
+      board.set_grid_coordinate(0,1,Chip.new("black"))
+      board.set_grid_coordinate(0,2,Chip.new("black"))
+      board.set_grid_coordinate(0,3,Chip.new("black"))
       expect(board.vertical_victory?).to be(true)
     end
     it "returns true if there is a vertical victory" do
-      board.set_grid_coordinate(2,2,"X")
-      board.set_grid_coordinate(2,3,"X")
-      board.set_grid_coordinate(2,4,"X")
-      board.set_grid_coordinate(2,5,"X")
+      board.set_grid_coordinate(2,2,Chip.new("black"))
+      board.set_grid_coordinate(2,3,Chip.new("black"))
+      board.set_grid_coordinate(2,4,Chip.new("black"))
+      board.set_grid_coordinate(2,5,Chip.new("black"))
       expect(board.vertical_victory?).to be(true)
     end
     it "returns true if there is a vertical victory" do
-      board.set_grid_coordinate(4,2,"X")
-      board.set_grid_coordinate(4,3,"X")
-      board.set_grid_coordinate(4,4,"X")
-      board.set_grid_coordinate(4,5,"X")
+      board.set_grid_coordinate(4,2,Chip.new("black"))
+      board.set_grid_coordinate(4,3,Chip.new("black"))
+      board.set_grid_coordinate(4,4,Chip.new("black"))
+      board.set_grid_coordinate(4,5,Chip.new("black"))
       expect(board.vertical_victory?).to be(true)
     end
    it "returns true if there is a vertical victory" do
-      board.set_grid_coordinate(5,1,"X")
-      board.set_grid_coordinate(5,2,"X")
-      board.set_grid_coordinate(5,3,"X")
-      board.set_grid_coordinate(5,4,"X")
+      board.set_grid_coordinate(5,1,Chip.new("black"))
+      board.set_grid_coordinate(5,2,Chip.new("black"))
+      board.set_grid_coordinate(5,3,Chip.new("black"))
+      board.set_grid_coordinate(5,4,Chip.new("black"))
       expect(board.vertical_victory?).to be(true)
     end
     it "returns false if there is no vertical victory" do
-      board.set_grid_coordinate(3,3,"X")
-      board.set_grid_coordinate(4,0,"X")
-      board.set_grid_coordinate(6,6,"X")
-      board.set_grid_coordinate(3,0,"X")
+      board.set_grid_coordinate(3,3,Chip.new("black"))
+      board.set_grid_coordinate(4,0,Chip.new("black"))
+      board.set_grid_coordinate(6,6,Chip.new("black"))
+      board.set_grid_coordinate(3,0,Chip.new("black"))
       expect(board.vertical_victory?).to be(false)
     end
   end

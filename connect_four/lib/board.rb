@@ -1,4 +1,5 @@
 class Board
+  require_relative "chip"
   attr_reader :grid
 
   def initialize
@@ -27,10 +28,19 @@ class Board
   def display_board
     puts " 1 2 3 4 5 6 7 "
     grid.each do |row|
-      row.each { |space| print "|#{space == ' ' ? space : "Z"}" }
+      row.each { |space| print "|#{space == ' ' ? space : space.unicode_convert}" }
       print "|\n"
     end
     print "---------------"
+  end
+
+  def drop_chip(column_number, color)
+    num = 0
+    until get_grid_coordinate(column_number-1, num) == ' ' || num == 6
+      num += 1
+    end
+    set_grid_coordinate(column_number-1, num, Chip.new(color)) unless num == 6
+
   end
 
   def xy_coord_to_flatten_coord(x,y)
@@ -57,13 +67,15 @@ class Board
       4.times { |num| diag_array  << flat_grid[x + (num)*6] }
       arrays << diag_array
     end
-    arrays.any? { |arr| !arr.include?(' ') }
+    arrays.any? { |arr| arr.all? { |ele| ele == ' ' ? false : ele.color == "red"} || arr.all? { |ele| ele == ' ' ? false : ele.color == "black" } }
   end
 
   def horizontal_victory?
     grid.each do |row|
-      row_string = row.join
-      return true if row_string =~ /\S\S\S\S/
+      converted_row = row.collect { |ele| ele == ' ' ? ' ' : ele.color }
+      converted_row_string = converted_row.join
+      return true if converted_row_string =~ /redredredred/ 
+      return true if converted_row_string =~ /blackblackblackblack/
     end
     false
   end
@@ -74,12 +86,13 @@ class Board
 
     (0..6).each do |n|
       string = ""
-      (0..5).each { |z| string << flat_grid[7*z+n]} 
+      (0..5).each { |z| string << (flat_grid[7*z+n] == ' ' ? ' ' : flat_grid[7*z+n].color) } 
       strings << string
     end
-    strings.each { |string| return true if string =~ /\S\S\S\S/ }
+    strings.each { |string| 
+      return true if string =~ /redredredred/ 
+      return true if string =~ /blackblackblackblack/ }
     false
-
   end
 
 end
