@@ -40,6 +40,11 @@ class Board
       num += 1
     end
     set_grid_coordinate(column_number-1, num, Chip.new(color)) unless num == 6
+    if num == 6
+      puts "full, please enter another column"
+      drop_chip(gets.chomp.strip.to_i, color)
+    end
+
 
   end
 
